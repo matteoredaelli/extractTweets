@@ -1,5 +1,8 @@
 Howto  extracting Tweets from Hadoop HDFS using Apache Scala
 
+use a release of slaprk > 1.1.1 beacause of
+  https://issues.apache.org/jira/browse/SPARK-3390
+
 Matteo Redaelli
 
 http://www.redaelli.org/matteo/
