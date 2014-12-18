@@ -46,7 +46,7 @@ object SparkExtractTweets {
 
     var ft = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
-    var extractedTweets = t.map(t0 => (ft.format(new java.util.Date(t0(0).asInstanceOf[Long])), t0(1), t0(2), t0(3))).distinct()
+    var extractedTweets = t.map(t0 => (ft.format(new java.util.Date(t0(0).asInstanceOf[Long])), t0(1), t0(2), cleanText(t0(3)))).distinct()
 
     var words = t.flatMap(t0 => "[\n\t]".r.replaceAllIn(t0(3).toString, " ").toLowerCase().split(" "))
     var topHashTags = words.filter(word => word.startsWith("#")).map(t0 => (cleanText(t0),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(10).map(t0 => (t0._2,t0._1))

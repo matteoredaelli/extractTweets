@@ -11,6 +11,10 @@ USAGE:
 
 sbt package
 
-bin/spark-submit --class SparkExtractTweets  --master local[4] target/scala-2.10/extract-tweets_2.10-1.0.jar "searches/tyre/2014/12/*" OpenSource > /var/www/a.html
+bin/spark-submit --class SparkExtractTweets  --master local[4] target/scala-2.10/extract-tweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 
 
-bin/spark-submit --class SparkExtractTweets  --master yarn-client target/scala-2.10/extract-tweets_2.10-1.0.jar "searches/tyre/2014/12/*" OpenSource > /var/www/a.html
+or
+
+bin/spark-submit --class SparkExtractTweets  --master yarn-client target/scala-2.10/extract-tweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 
+
+
