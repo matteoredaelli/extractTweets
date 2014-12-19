@@ -44,7 +44,7 @@ end.rcode-->
       </div>
 
       <div class="row marketing">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
            <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Top Hashtags</h3>
@@ -53,6 +53,43 @@ end.rcode-->
 
 <!--begin.rcode results='asis', echo=FALSE, comment=FALSE
   print(xtable(hashtags), type="html",
+                          include.rownames=FALSE,
+                          include.colnames=FALSE,
+                          html.table.attributes="border=0")
+end.rcode-->
+
+              </div>
+           </div>
+
+         </div>
+
+        <div class="col-sm-3">
+           <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Top Mentions</h3>
+              </div>
+              <div class="panel-body">
+
+<!--begin.rcode results='asis', echo=FALSE, comment=FALSE
+  print(xtable(mentions), type="html",
+                          include.rownames=FALSE,
+                          include.colnames=FALSE,
+                          html.table.attributes="border=0")
+end.rcode-->
+
+              </div>
+           </div>
+         </div>
+
+        <div class="col-sm-3">
+           <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Top users</h3>
+              </div>
+              <div class="panel-body">
+
+<!--begin.rcode results='asis', echo=FALSE, comment=FALSE
+  print(xtable(users), type="html",
                           include.rownames=FALSE,
                           include.colnames=FALSE,
                           html.table.attributes="border=0")
@@ -76,44 +113,9 @@ end.rcode-->
 
               </div>
            </div>
-
          </div>
 
-        <div class="col-sm-4">
-           <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">Top Mentions</h3>
-              </div>
-              <div class="panel-body">
-
-<!--begin.rcode results='asis', echo=FALSE, comment=FALSE
-  print(xtable(mentions), type="html",
-                          include.rownames=FALSE,
-                          include.colnames=FALSE,
-                          html.table.attributes="border=0")
-end.rcode-->
-
-              </div>
-           </div>
-         </div>
-
-        <div class="col-sm-4">
-           <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">Top users</h3>
-              </div>
-              <div class="panel-body">
-
-<!--begin.rcode results='asis', echo=FALSE, comment=FALSE
-  print(xtable(users), type="html",
-                          include.rownames=FALSE,
-                          include.colnames=FALSE,
-                          html.table.attributes="border=0")
-end.rcode-->
-
-              </div>
-           </div>
-
+        <div class="col-sm-3">
            <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Tweets by day</h3>
