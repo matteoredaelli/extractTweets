@@ -17,6 +17,7 @@ or
 
 bin/spark-submit --class SparkExtractTweets  --master yarn-client target/scala-2.10/extract-tweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 
 
-knit("tweets-report-template.Rhtml", output="/var/www/a.html")
 
+cd r-scripts
+Rscript tweets-report-builder.R "@Continentaltire in 2014-12" /tmp/ /var/www/a.html
 
