@@ -143,10 +143,11 @@ end.rcode-->
               </div>
               <div class="panel-body">
 <!--begin.rcode results='asis', echo=FALSE, comment=FALSE
-  print(xtable(tweets.merged), type="html",
+  if (! skip.tweets) {print(xtable(tweets.merged), type="html",
                           include.rownames=FALSE,
                           include.colnames=FALSE,
                           html.table.attributes="border=0")
+  } else { print("Tweets list was not requested") }
 end.rcode-->
               </div>
            </div>
