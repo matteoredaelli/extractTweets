@@ -22,6 +22,7 @@
   mentions = read.delim(file.path(source_path, "top-mentions.tsv"), header=FALSE)
   users = read.delim(file.path(source_path, "top-users.tsv"), header=FALSE)
   sources = read.delim(file.path(source_path, "top-sources.tsv"), header=FALSE)
+  languages = read.delim(file.path(source_path, "top-langs.tsv"), header=FALSE)
   tweets.by.day = read.delim(file.path(source_path, "tweets-by-day.tsv"), header=FALSE)
   tweets = read.delim(file.path(source_path, "tweets.tsv"), header=FALSE)
   #tweets$link = sprintf('<a href="https://twitter.com/%s/status/%s">%s</a>', tweets$V2, tweets$V3, tweets$V1)
@@ -100,7 +101,7 @@ end.rcode-->
 
            <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title">Top sw/devices</h3>
+                <h3 class="panel-title">Top sources</h3>
               </div>
               <div class="panel-body">
 
@@ -113,6 +114,23 @@ end.rcode-->
 
               </div>
            </div>
+
+           <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Languages</h3>
+              </div>
+              <div class="panel-body">
+
+<!--begin.rcode results='asis', echo=FALSE, comment=FALSE
+  print(xtable(languages), type="html",
+                          include.rownames=FALSE,
+                          include.colnames=FALSE,
+                          html.table.attributes="border=0")
+end.rcode-->
+
+              </div>
+           </div>
+
          </div>
 
         <div class="col-sm-3">

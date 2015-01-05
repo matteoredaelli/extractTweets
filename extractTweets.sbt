@@ -1,4 +1,4 @@
-name := "Extract Tweets"
+name := "Twitter:ExtractingInfoFromTweets"
 
 version := "1.0"
 
@@ -8,5 +8,5 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 unmanagedBase := baseDirectory.value / "custom_lib"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "1.1.1"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.2.0"
 

@@ -48,7 +48,7 @@ object SparkExtractTweets {
     val tweets = sqlContext.jsonFile(source_path)
     tweets.registerTempTable("tweets")
 
-    val t = sqlContext.sql("SELECT distinct createdAt, user.screenName, id, text, source FROM tweets")
+    val t = sqlContext.sql("SELECT distinct createdAt, user.screenName, id, text, source, lang FROM tweets")
 
     var ft = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
@@ -61,10 +61,12 @@ object SparkExtractTweets {
     var topUsers = t.map(t0 => (cleanText(t0(1)),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
 
     var tweetsByDays = t.map(t0 => (ft.format(new java.util.Date(t0(0).asInstanceOf[Long])), 1)).reduceByKey(_ + _).sortByKey().collect()
-    // saving tweets
     
     var topSources = t.map(t0 => (extractSourceText(t0(4)),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
 
+    var topLangs = t.map(t0 => (t0(5),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
+
+    // saving tweets
     saveArrayToFile(extractedTweets.map(t0 => formatTweet(t0)).collect(), target_path + "/tweets.tsv")
 
     saveArrayToFile(topHashTags.map(r => formatTopRecord(r)), target_path + "/top-hashtags.tsv")
@@ -72,6 +74,7 @@ object SparkExtractTweets {
     saveArrayToFile(topUsers.map(r => formatTopRecord(r)), target_path + "/top-users.tsv")
     saveArrayToFile(tweetsByDays.map(r => formatTopRecord(r)), target_path + "/tweets-by-day.tsv")
     saveArrayToFile(topSources.map(r => formatTopRecord(r)), target_path + "/top-sources.tsv")
+    saveArrayToFile(topLangs.map(r => formatTopRecord(r)), target_path + "/top-langs.tsv")
 
     sc.stop()
   }
