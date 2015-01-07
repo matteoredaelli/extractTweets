@@ -11,13 +11,12 @@ USAGE:
 
 sbt package
 
-bin/spark-submit --class SparkExtractTweets  --master local[4] target/scala-2.10/twitter-extractinginfofromtweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 
+bin/spark-submit --class SparkExtractTweets  --master local[4] target/scala-2.10/twitter-extractinginfofromtweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 20
 
 or
 
-bin/spark-submit --class SparkExtractTweets  --master yarn-client target/scala-2.10/twitter-extractinginfofromtweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 
+bin/spark-submit --class SparkExtractTweets  --master yarn-client target/scala-2.10/twitter-extractinginfofromtweets_2.10-1.0.jar "searches/tyre/2014/12/*" /tmp 20
 
 
-cd r-scripts
-Rscript tweets-report-builder.R "@Continentaltire in 2014-12" /tmp/ /var/www/a.html
+cd r-scripts && Rscript tweets-report-builder.R "@Continentaltire in 2014-12" /tmp/ /var/www/a.html
 

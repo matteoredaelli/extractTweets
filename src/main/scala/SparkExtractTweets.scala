@@ -43,7 +43,7 @@ object SparkExtractTweets {
     val sqlContext = new SQLContext(sc)
     val source_path = args(0)
     val target_path = args(1)
-    val top = 20
+    val top = args(2).toInt
 
     val tweets = sqlContext.jsonFile(source_path)
     tweets.registerTempTable("tweets")
@@ -55,6 +55,7 @@ object SparkExtractTweets {
     var extractedTweets = t.map(t0 => (ft.format(new java.util.Date(t0(0).asInstanceOf[Long])), t0(1), t0(2), cleanText(t0(3)))).distinct()
 
     var words = t.flatMap(t0 => "[\n\t]".r.replaceAllIn(t0(3).toString, " ").toLowerCase().split(" "))
+    var topWords = words.map(t0 => (cleanText(t0),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
     var topHashTags = words.filter(word => word.startsWith("#")).map(t0 => (cleanText(t0),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
     var topMentions = words.filter(word => word.startsWith("@")).map(t0 => (cleanText(t0),1)).reduceByKey(_ + _).map(t0 => (t0._2,t0._1)).sortByKey(ascending=false).take(top).map(t0 => (t0._2,t0._1))
 
@@ -69,12 +70,17 @@ object SparkExtractTweets {
     // saving tweets
     saveArrayToFile(extractedTweets.map(t0 => formatTweet(t0)).collect(), target_path + "/tweets.tsv")
 
+    saveArrayToFile(topWords.map(r => formatTopRecord(r)), target_path + "/top-words.tsv")
     saveArrayToFile(topHashTags.map(r => formatTopRecord(r)), target_path + "/top-hashtags.tsv")
     saveArrayToFile(topMentions.map(r => formatTopRecord(r)), target_path + "/top-mentions.tsv")
     saveArrayToFile(topUsers.map(r => formatTopRecord(r)), target_path + "/top-users.tsv")
     saveArrayToFile(tweetsByDays.map(r => formatTopRecord(r)), target_path + "/tweets-by-day.tsv")
     saveArrayToFile(topSources.map(r => formatTopRecord(r)), target_path + "/top-sources.tsv")
     saveArrayToFile(topLangs.map(r => formatTopRecord(r)), target_path + "/top-langs.tsv")
+
+    val u = sqlContext.sql("SELECT distinct createdAt, user.screenName, user.name, user.description, user.location, user.followersCount, user.biggerProfileImageURL, user.statusesCount, user.friendsCount, user.favouritesCount, user.lang FROM tweets")
+
+    saveArrayToFile(u.map(u1 => u1.mkString("\t")).collect(), target_path + "/users.tsv")
 
     sc.stop()
   }
